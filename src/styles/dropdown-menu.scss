@@ -1,0 +1,32 @@
+.selectCity {
+    width: 300px;
+    margin: 150px auto 50px;
+    background-color: rgba(#fff, 0.3);
+    backdrop-filter: blur(10px);
+    #selectedCity {
+        padding: 15px 20px;
+        width: 100%;
+        display: block;
+        box-sizing: border-box;
+        border-radius: 0;
+        border: 1px solid #fff;
+        &:focus {
+            outline: 0;
+        }
+    }
+    .dropdown-menu {
+        display: block;
+        background-color: rgba(#fff, 0.3);
+        padding: 10px 0;
+        max-height: calc(100vh - 300px);
+        overflow-y: scroll;
+        .menu-item {
+            display: block;
+            padding: 8px 20px;
+            cursor: pointer;
+            &.active, &:hover {
+                background-color: #fff;
+            }
+        }
+    }
+}
