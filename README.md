@@ -1,3 +1,11 @@
+# Forecast Application
+
+An application where users can choose a Finnish city and see its forecast for today and the next three days.
+
+## TODO
+
+Add the ability to view the forecast for today and the next three days.
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
