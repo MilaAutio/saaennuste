@@ -1,12 +1,16 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios, { AxiosResponse } from 'axios';
 import * as convert from 'xml-js';
-import { CitiesResponse, CityResponse } from '../interfaces/cities';
+import { CitiesResponse, CityResponse } from '../types/cities';
+
+interface SearchInputProps {
+    changeCity: (city: string) => void;
+    selectedCity: string;
+}
 
 //input field where user chooses the city they want the forecast from
-export const SearchInput = () => {
+export const SearchInput = ({changeCity, selectedCity}: SearchInputProps) => {
     const [cities, setCities] = useState<string[]>([]);
-    const [selectedCity, setSelectedCity] = useState<string>('');
     const [showDropDownMenu, setShowDropDownMenu] = useState<boolean>(false);
     const [dropDownSearchResults, setDropDownSearchResults] = useState<string[]>([]);
     const dropDownMenu = useRef<HTMLDivElement>(null);
@@ -38,14 +42,14 @@ export const SearchInput = () => {
     
     //handles the selection of city from the dropdown menu
     const handleMenuItemClick = (city:string) : void => {
-        setSelectedCity(city);
+        changeCity(city);
         setShowDropDownMenu(false);
         setDropDownSearchResults(cities);
     }
 
     //handles the selectCity elements on change
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
-        setSelectedCity(event.target.value);
+        changeCity(event.target.value);
         const searchResults = cities.filter((city:string) => {
             return city.toLowerCase().includes(event.target.value.toLowerCase()) && city;
         })

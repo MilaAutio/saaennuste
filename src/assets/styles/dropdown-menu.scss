@@ -1,8 +1,10 @@
 .selectCity {
     width: 300px;
-    margin: 150px auto 50px;
+    margin: 50px auto;
     background-color: rgba(#fff, 0.3);
     backdrop-filter: blur(10px);
+    z-index: 10;
+    position: relative;
     #selectedCity {
         padding: 15px 20px;
         width: 100%;
@@ -16,10 +18,14 @@
     }
     .dropdown-menu {
         display: block;
-        background-color: rgba(#fff, 0.3);
+        background-color: rgba(#fff, 0.95);
         padding: 10px 0;
         max-height: calc(100vh - 300px);
         overflow-y: scroll;
+        position: absolute;
+        top: 100%;
+        width: 100%;
+        z-index: 10;
         .menu-item {
             display: block;
             padding: 8px 20px;
