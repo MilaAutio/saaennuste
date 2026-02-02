@@ -1,8 +1,8 @@
 import { WeatherConditionType } from '../types/weather';
 
 export const weatherDescriptions: { [key: number]: WeatherConditionType } = {
-    0: { description: 'selkeää', color: '#FFD700' },
-    1: { description: 'enimmäkseen selkeää', color: '#FFEC8B' },
+    0: { description: 'selkeää', color: '#ffd900ff' },
+    1: { description: 'enimmäkseen selkeää', color: '#ffdc2fff' },
     2: { description: 'puolipilvistä', color: '#C0C0C0' },
     3: { description: 'enimmäkseen pilvistä', color: '#A9A9A9' },
     4: { description: 'pilvistä', color: '#808080' },

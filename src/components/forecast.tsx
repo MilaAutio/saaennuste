@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import axios, { AxiosResponse } from 'axios';
 import * as convert from 'xml-js';
 
+import { WeatherSymbol } from "./weatherSymbols";
+
 export const ForeCast = () => {
 
     const [selectedCity, setSelectedCity] = useState<string>('');
@@ -12,8 +14,11 @@ export const ForeCast = () => {
     }
 
     return <div className="forecast">
-        <SearchInput changeCity={handleCityChange} selectedCity={selectedCity}/>
-        <ForeCastResults selectedCity={selectedCity}/>
+        { selectedCity ? (
+            <ForeCastResults selectedCity={selectedCity}/>
+        ) : (
+            <SearchInput changeCity={handleCityChange} selectedCity={selectedCity}/>
+        )}
     </div>
 };
 
@@ -52,25 +57,46 @@ const ForeCastResults = ({selectedCity}: any) => {
         currentWeatherTime = dateFormatter.format(date);
     }
 
-    console.log(currentWeather)
+    const now = new Date();
+
+    const optionsWeekday: Intl.DateTimeFormatOptions = { weekday: "long", timeZone: "Europe/Helsinki" };
+    const optionsDate: Intl.DateTimeFormatOptions = { day: "numeric", month: "numeric", year: "numeric", timeZone: "Europe/Helsinki" };
+    const pad = (n: number) => n.toString().padStart(2, "0");
+    const hours = pad(now.getHours());
+    const minutes = pad(now.getMinutes());
+
+    const time = `${hours}:${minutes}`;
+
+    const weekday = new Intl.DateTimeFormat("fi-FI", optionsWeekday).format(now);
+    const date = new Intl.DateTimeFormat("fi-FI", optionsDate).format(now);
+
 
     return <div className="forecast-results">
         { currentWeather !== 'No Value' && (
             <div className="current-weather">
                 { currentWeatherTime && (
-                    <div className="current-time">Sää {currentWeatherTime}</div>
-                )}
-                { currentWeather.temperature && (
-                    <div className="temperature"><span className="number">{currentWeather.temperature}</span> °C</div>
-                )}
-                { currentWeather.windspeedms && (
-                    <div className="wind">
-                        { currentWeather.windvectorms && (
-                            <div className="direction" style={{ transform: `rotateZ(${currentWeather.windvectorms}deg)` }}></div>
-                        )}
-                        <div className="speed"><span className="number">{currentWeather.windspeedms}</span> m/s</div>
+                    <div className="current-time">
+                        <div className="weekday">{weekday}</div>
+                        <div className="date">{date}</div>
+                        <div className="time">{time}</div>
                     </div>
                 )}
+                { currentWeatherTime && currentWeather.weathersymbol3 && (
+                    <WeatherSymbol symbol3={currentWeather.weathersymbol3} isDaytime="true" />
+                )}
+                <div className="weather-condition">
+                    { currentWeather.temperature && (
+                        <div className="temperature"><span className="number">{currentWeather.temperature}</span> °C</div>
+                    )}
+                    { currentWeather.windspeedms && (
+                        <div className="wind">
+                            { currentWeather.windvectorms && (
+                                <div className="direction" style={{ transform: `rotateZ(${currentWeather.windvectorms}deg)` }}></div>
+                            )}
+                            <div className="speed"><span className="number">{currentWeather.windspeedms}</span> m/s</div>
+                        </div>
+                    )}
+                </div>
             </div>
         )}
         <div className="forecast-for-next-three-days">
